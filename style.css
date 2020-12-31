@@ -1,0 +1,67 @@
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-family: "Inconsolata", monospace;
+    font-weight: 500;
+    
+    background-color: rgb(230, 230, 221)
+    
+}
+.container{
+    display: grid;
+    background-color: #818181;
+    height: 700px;
+    width: 400px;
+    padding: 10px;
+    min-height: 0;  /* NEW */
+    min-width: 0;
+    grid-template-rows: 1fr 1fr;     /* adjustment */
+    grid-template-columns: 1fr 1fr; 
+
+}   
+#display{
+    background-color: white;
+    grid-column: 1 / 1;
+    font-size: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    flex-direction: column;
+    overflow: hidden;  /* NEW */
+    min-width: 0;      /* NEW; needed for Firefox */
+    border: 2px solid black;
+    border-bottom: hidden;
+}
+#button-container{
+    background-color: #8181817e;
+    grid-column: 2 / 1;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    grid-template-columns: repeat(4, 100px);
+    grid-template-rows: minmax(120px, auto) repeat(4, 100px);
+    border: 2px solid black;
+    
+}
+.btn{
+    grid-column: span 1;
+    grid-row: span 1;
+    padding: 20px;
+    border: 2px solid white;
+    background-color: #ffffff7e;
+    font-size: 1.5em;
+}
+.large{
+    grid-column: span 2;
+    background-color: rgb(231, 210, 24);
+}
+.operator{
+    background-color: orange;
+}
+#inner-displ{
+    margin: 5px;
+}
