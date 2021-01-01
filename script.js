@@ -6,14 +6,21 @@ const digits = document.querySelectorAll(".number");
 
 const equals = document.querySelector("#equals");
 
-const result = document.querySelector("#result")
+const result = document.querySelector("#result");
 
-const hidden = document.querySelector("#hidden-displ")
+const hidden = document.querySelector("#hidden-displ");
+
+const decimal = document.querySelector("#decimal")
 
 let currentOperator = "";
 let leftSide = 0;
 let rightSide = 0;
+let resetWithDigit = false;
+let validDecimal = true;
+let pressedOperator = false;
+
 const operators = document.querySelectorAll(".operator")
+
 function add (a, b) {
 	return a+b;
 }
@@ -54,13 +61,23 @@ function operate (currentOperator, leftSide, rightSide) {
 
 digits.forEach( digit => {
 	digit.addEventListener("click", () => {
+		if (resetWithDigit){
+			clearText();
+			hidden.textContent = hidden.textContent + digit.textContent;
+			displ.textContent = displ.textContent + digit.textContent;
+			resetWithDigit = false;
+		}
+		else{
 		hidden.textContent = hidden.textContent + digit.textContent;
 		displ.textContent = displ.textContent + digit.textContent;
+		}
 	});
 });
 
 operators.forEach( operator => {
 	operator.addEventListener("click", () => {
+		pressedOperator = true;
+		resetWithDigit = false;
 		if (currentOperator !== ""){
 			rightSide = hidden.textContent;
 			leftSide = operate(currentOperator, Math.round(leftSide * 100) / 100, Math.round(hidden.textContent * 100) / 100);
@@ -79,11 +96,26 @@ operators.forEach( operator => {
 	});
 });
 
+decimal.addEventListener("click", () => {
+	if ((hidden.textContent !== "") &&(pressedOperator)){
+		validDecimal = true;
+	}
+	
+	if(validDecimal){
+		hidden.textContent = hidden.textContent + decimal.textContent;
+		displ.textContent = displ.textContent + decimal.textContent;
+		validDecimal = false;
+		pressedOperator = false;
+	}
+	
+});
+
 clear.addEventListener("click", clearText);
 
 equals.addEventListener("click", ()  =>{
 	result.textContent = operate(currentOperator, Math.round(leftSide * 100) / 100, Math.round(hidden.textContent * 100) / 100);
 	displ.textContent = result.textContent;
+	resetWithDigit = true;
 });
 
 function clearText(){
@@ -93,4 +125,9 @@ function clearText(){
 	rightSide = 0;
 	currentOperator = "";
 	result.textContent = "";
+	pressedOperator = false;
+	validDecimal = true;
 }
+
+
+
